@@ -1,7 +1,7 @@
 const axios = require('axios');
 const Promise = require('bluebird').Promise;
 const googleMaps = require('@google/maps').createClient({
-  key: 'AIzaSyBTd3YnPAF_bno0NQfKjmNsTL6BKlaqK3I',
+  key: process.env.googleAPI,
   Promise: Promise
 });
 
