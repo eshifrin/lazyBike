@@ -12,7 +12,7 @@ import BikeMap from '../components/BikeMap'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
-  handleInputChange: (e) => handleInputChange(e.target.name, e.target.value),
+  handleInputChange,
   getBikeRoutes
 }
 
