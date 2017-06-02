@@ -1,13 +1,20 @@
+import axios from 'axios'
 // ------------------------------------
 // Constants
 // ------------------------------------
 export const BIKEMAP_HANDLE_INPUT_CHANGE = 'BIKEMAP_HANDLE_INPUT_CHANGE'
 export const BIKEMAP_GET_BIKE_ROUTES = 'BIKEMAP_GET_BIKE_ROUTES'
-
+export const ROUTES_LOADING = 'ROUTES_LOADING'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
+export function routesLoading(bool) {
+  return {
+    type: ROUTES_LOADING,
+    payload: bool
+  }
+}
 export function handleInputChange (stateVal, value) {
   return {
     type    : BIKEMAP_HANDLE_INPUT_CHANGE,
@@ -19,18 +26,22 @@ export function handleInputChange (stateVal, value) {
     returns a function for lazy evaluation. It is incredibly useful for
     creating async actions, especially when combined with redux-thunk! */
 
-export const getBikeRoutes = () => {
-  return (dispatch, getState) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        dispatch({
-          type    : BIKEMAP_GET_BIKE_ROUTES,
-          payload : ''
+export const getBikeRoutes = (start, end) => {
+  return (dispatch) => {
+      dispatch(routesLoading(true));
+        axios.get('/directions', {
+          params: {
+            start: start,
+            end: end
+          }
         })
-        resolve()
-      }, 200)
-    })
-  }
+        .then(routes => {
+          return routes;
+        })
+        .then(routes => dispatch({type: BIKEMAP_GET_BIKE_ROUTES, payload: routes}))
+        .then(() => dispatch(routesLoading(false)))
+        .catch(() => console.log('error'))
+    }
 }
 // export const getBikeRoutes = () => {
 //   return {
@@ -41,7 +52,8 @@ export const getBikeRoutes = () => {
 
 export const actions = {
   handleInputChange,
-  getBikeRoutes
+  getBikeRoutes,
+  routesLoading
 }
 
 // ------------------------------------
@@ -65,7 +77,17 @@ const ACTION_HANDLERS = {
   },
 
   [BIKEMAP_GET_BIKE_ROUTES] : (state, action) => {
-    state.bikeRoutes = action.payload
+    return state = {
+      ...state,
+      bikeRoutes: action.payload
+    }
+  },
+
+  [ROUTES_LOADING] : (state, action) => {
+    return state = {
+      ...state,
+      loading: action.payload
+    }
   }
 }
 
@@ -75,7 +97,8 @@ const ACTION_HANDLERS = {
 const initialState = {
   start: '',
   end: '',
-  bikeRoutes: []
+  bikeRoutes: [],
+  loading: false
 }
 export default function bikeMapReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]

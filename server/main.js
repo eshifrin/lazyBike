@@ -35,7 +35,12 @@ if (project.env === 'development') {
     path: '/__webpack_hmr'
   }))
 
-  app.get('/directions', directionsRoute)
+  app.get('/directions', directionsRoute);
+
+
+    // directionsRoute)app.get('/directions', function(req, res) => {
+    // console.log(req.body)
+    // directionsRoute)
 
   // Serve static assets from ~/public since Webpack is unaware of
   // these files. This middleware doesn't need to be enabled outside
@@ -46,6 +51,7 @@ if (project.env === 'development') {
   // This rewrites all routes requests to the root /index.html file
   // (ignoring file requests). If you want to implement universal
   // rendering, you'll want to remove this middleware.
+  
   app.use('*', function (req, res, next) {
     const filename = path.join(compiler.outputPath, 'index.html')
     compiler.outputFileSystem.readFile(filename, (err, result) => {
@@ -72,6 +78,7 @@ if (project.env === 'development') {
   app.use(express.static(path.resolve(project.basePath, project.outDir)))
 
 }
+
 
 module.exports = app
 
