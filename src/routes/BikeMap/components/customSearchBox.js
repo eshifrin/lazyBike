@@ -11,7 +11,6 @@ import {
   unmountComponentAtNode,
 } from "react-dom";
 
-
 class CustomSearchBox extends Component {
   constructor(props) {
     super(props)

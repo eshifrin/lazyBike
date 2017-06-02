@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { handleInputChange, getBikeRoutes} from '../modules/bikeMap'
+import { handleInputChange, getBikeRoutes, routesLoading } from '../modules/bikeMap'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -13,13 +13,15 @@ import BikeMap from '../components/BikeMap'
 
 const mapDispatchToProps = {
   handleInputChange,
-  getBikeRoutes
+  getBikeRoutes,
+  routesLoading
 }
 
 const mapStateToProps = (state) => ({
   start : state.bikemap.start,
   end : state.bikemap.end,
-  bikeRoutes: state.bikemap.bikeRoutes
+  bikeRoutes: state.bikemap.bikeRoutes,
+  loading: state.bikemap.loading
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
