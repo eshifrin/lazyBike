@@ -11,7 +11,7 @@ const BikeMap = ({start, end, bikeRoutes, loading, handleInputChange, getBikeRou
     <div>
     <h2>Bike Map Routes:</h2>
     <InputLocation start={start} end={end} getBikeRoutes={getBikeRoutes} handleInputChange={handleInputChange}/>
-    <SimpleMapExample />
+    <SimpleMapExample routes={bikeRoutes} start={start} end={end}/>
     <RoutesList isLoading={loading} routes={bikeRoutes}/>
     </div>
   </div>

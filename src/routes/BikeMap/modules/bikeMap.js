@@ -35,8 +35,8 @@ export const getBikeRoutes = (start, end) => {
             end: end
           }
         })
-        .then(routes => {
-          return routes;
+        .then(data => {
+          return data.data;
         })
         .then(routes => dispatch({type: BIKEMAP_GET_BIKE_ROUTES, payload: routes}))
         .then(() => dispatch(routesLoading(false)))
