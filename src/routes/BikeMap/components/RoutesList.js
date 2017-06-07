@@ -24,17 +24,18 @@ class RoutesList extends Component {
         </div>
       )
     }
-
-    return (
-      <div style={{ margin: '0 auto' }}>
-        <div>
-          <h2>Bike Map Routes:</h2>
-          {routes.map((route,ind) => {
-            return <BikeRoute stats={route} num={ind + 1}/>
-          })}
+    else {
+      return (
+        <div style={{ margin: '0 auto' }}>
+          <div>
+            <h2>Bike Map Routes:</h2>
+            {routes.map((route,ind) => {
+              return <BikeRoute key={ind} stats={route} num={ind + 1}/>
+            })}
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 }
 
