@@ -26,23 +26,42 @@ export function handleInputChange (stateVal, value) {
     returns a function for lazy evaluation. It is incredibly useful for
     creating async actions, especially when combined with redux-thunk! */
 
+// export const getBikeRoutes = (start, end) => {
+//   return (dispatch) => {
+//       dispatch(routesLoading(true));
+//         fetch('/directions', {
+//           params: {
+//             start: start,
+//             end: end
+//           }
+//         })
+//         .then((response, error) => {
+//           if(error){ throw new error}
+//           return data.data;
+//         })
+//         .then(routes => dispatch({type: BIKEMAP_GET_BIKE_ROUTES, payload: routes}))
+//         .then(() => dispatch(routesLoading(false)))
+//         .catch((error) => console.log(error))
+//     }
+// }
+
 export const getBikeRoutes = (start, end) => {
   return (dispatch) => {
       dispatch(routesLoading(true));
-        axios.get('/directions', {
-          params: {
-            start: start,
-            end: end
+        fetch(`/directions?start=${start}&end=${end}`)
+        .then(response => {
+          if(!response.ok){
+            throw Error(response.statusText);
           }
+          dispatch(routesLoading(false))
+          return response;
         })
-        .then(routes => {
-          return routes;
-        })
+        .then(response => response.json())
         .then(routes => dispatch({type: BIKEMAP_GET_BIKE_ROUTES, payload: routes}))
-        .then(() => dispatch(routesLoading(false)))
-        .catch(() => console.log('error'))
+        .catch((error) => console.log(error))
     }
 }
+
 // export const getBikeRoutes = () => {
 //   return {
 //           type    : BIKEMAP_GET_BIKE_ROUTES,
@@ -84,6 +103,7 @@ const ACTION_HANDLERS = {
   },
 
   [ROUTES_LOADING] : (state, action) => {
+    console.log(state, action.payload)
     return state = {
       ...state,
       loading: action.payload

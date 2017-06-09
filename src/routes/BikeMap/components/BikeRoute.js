@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-const BikeRoute = ({route}) => (
+const BikeRoute = ({stats, num}) => (
   <div>
-    <span>lol</span>
+    <h3>Route: {num}</h3>
+    <div>
+      <div>Ascent: {stats.ascent}</div>
+      <div>Descent: {stats.descent}</div>
+    </div>
   </div>
 )
 
